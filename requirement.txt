@@ -1,0 +1,7 @@
+streamlit
+langchain
+chromadb
+langchain_community
+pypdf
+langsmith
+cerberus
