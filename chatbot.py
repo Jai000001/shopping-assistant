@@ -36,7 +36,7 @@ load_dotenv()
 
 # Access the key
 os.environ["LANGCHAIN_TRACING_V2"]="true"
-os.environ["LANGCHAIN_API_KEY"]="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"
+os.environ["LANGCHAIN_API_KEY"]="fhgfhfhfhfrytrygff"
 os.environ["LANGCHAIN_PROJECT"]="Testbot1"
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
@@ -223,4 +223,5 @@ if st.button("🔄 Reset Chat"):
     new_memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     st.session_state.qa_chain.memory = new_memory
     st.success("Chat history reset!")
+
 
