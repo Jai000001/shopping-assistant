@@ -38,7 +38,6 @@ load_dotenv()
 os.environ["LANGCHAIN_TRACING_V2"]="true"
 os.environ["LANGCHAIN_API_KEY"]="fhgfhfhfhfrytrygff"
 os.environ["LANGCHAIN_PROJECT"]="Testbot1"
-openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # Load and split PDF
 def load_pdf(file_path):
@@ -113,9 +112,9 @@ Assistant:
 )
 
 # Create QA chain using Ollama LLM
-def create_conversational_chain(vectordb, model_name="gpt-4o-mini", open_ai_api_key=openai_api_key):
+def create_conversational_chain(vectordb, model_name="mistral"):
     # llm = ChatOllama(model=model_name)
-    llm = ChatOpenAI(model=model_name, max_tokens=2000, temperature=0.7)
+    llm = ChatOllama(model=model_name, max_tokens=2000, temperature=0.7)
     base_retriever = vectordb.as_retriever(search_kwargs={
         "k": 10}, search_type = "mmr")  # base retriever
     # zip_retriver = LLMChainExtractor.from_llm(llm=llm)
@@ -178,12 +177,9 @@ else:
 if "qa_chain" in st.session_state:
     user_question = st.text_input("Shopper assistant:")
     if user_question:
-        with st.spinner("Thinking...") and get_openai_callback() as cb:
+        with st.spinner("Thinking..."):
             answer = st.session_state.qa_chain.invoke({"question": user_question})
             
-            st.info(
-                f"📊 Token Usage → Prompt: {cb.prompt_tokens}, Completion: {cb.completion_tokens}, "
-                f"Total: {cb.total_tokens}")
             print(answer.keys())
             @traceable
             def print_docs_and_scores(user_question):
